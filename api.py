@@ -11,7 +11,15 @@ def get_coordinates():
         location = geolocator.geocode(address, timeout=30)
         if location:
             latitude, longitude = location.latitude, location.longitude
-            return jsonify({"latitude": latitude, "longitude": longitude})
+            if latitude != None:
+                if longitude != None:
+                    return jsonify({"latitude": latitude, "longitude": longitude})
+                else:
+                    longitude = 0
+            else:
+                latitude = 0
+                return jsonify({"latitude": latitude, "longitude": longitude})
+
         else:
             return jsonify({"error": "Adresse introuvable"})
     except Exception as e:
